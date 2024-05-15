@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "asm_func.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -67,6 +68,23 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+	uint32_t a, b;
+	a = 50;
+	b = 20;
+	asm_sum(a, b);
+
+	// Ejecución paso a paso:
+	// Vemos el contenido del registro control:
+	uint32_t x = __get_CONTROL();
+	// Seteamos el valor en cero (vamos al modo no privilegiado)
+	x |= 1;
+	__set_CONTROL(x); // Ver en la pestaña Register el valor de control
+	// Intentamos volver al modo privilegiado:
+	x &= ~1;
+	__set_CONTROL(x); // Ver en la pestaña Register el valor de control
+	// Como la escritura del registro es ignorada, se debe disparar una excepción:
+	asm_svc();
+
 
   /* USER CODE END 1 */
 

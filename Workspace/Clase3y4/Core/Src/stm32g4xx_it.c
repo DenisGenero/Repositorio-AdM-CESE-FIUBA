@@ -144,6 +144,10 @@ void UsageFault_Handler(void)
 void SVC_Handler(void)
 {
   /* USER CODE BEGIN SVCall_IRQn 0 */
+	// Aquí estamos en modo Handler, por lo tanto la escritura será hecha:
+	uint32_t x = __get_CONTROL();
+	x &= ~1;
+	__set_CONTROL(x);  // Ver en la pestaña Register el valor de control
 
   /* USER CODE END SVCall_IRQn 0 */
   /* USER CODE BEGIN SVCall_IRQn 1 */
