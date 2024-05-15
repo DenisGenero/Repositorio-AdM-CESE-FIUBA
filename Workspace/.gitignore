@@ -14,7 +14,7 @@
 *.cproject
 *.mxproject
 *.project
-*.oic
+*.ioc
 *.launch
 *.ld
 *.o
