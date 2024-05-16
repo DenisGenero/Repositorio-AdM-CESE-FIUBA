@@ -52,6 +52,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void zeros(uint32_t *vec, uint32_t longitud);
 
 /* USER CODE END PFP */
 
@@ -68,11 +69,14 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	uint32_t a, b;
+	/* ----------- Función asm_sum ----------- */
+	uint32_t a, b, c;
 	a = 50;
 	b = 20;
-	asm_sum(a, b);
+	c = asm_sum(a, b);
+	/* ----------- Función asm_sum ----------- */
 
+	/* ----------- Función asm_svc ----------- */
 	// Ejecución paso a paso:
 	// Vemos el contenido del registro control:
 	uint32_t x = __get_CONTROL();
@@ -84,7 +88,31 @@ int main(void)
 	__set_CONTROL(x); // Ver en la pestaña Register el valor de control
 	// Como la escritura del registro es ignorada, se debe disparar una excepción:
 	asm_svc();
+	/* ----------- Función asm_svc ----------- */
 
+	/* ----------- Función asm_stack ----------- */
+	uint32_t d, e, f;
+	d = 10;
+	e = 1234;
+	f = 5678;
+	asm_stack(a, b, c, d, e, f);
+	/* ----------- Función asm_stack ----------- */
+
+	/* ----------- Función zeros ----------- */
+	uint32_t lon = 10;
+	uint32_t vector[lon];
+	uint32_t vector2[lon];
+	zeros(vector, lon);
+	asm_zeros(vector2, lon);
+	/* ----------- Función zeros ----------- */
+
+	/* ----------- Función bitfield_clear ----------- */
+	uint32_t dato, resultado, inicio, ancho;
+	dato = 1023;
+	inicio = 3;
+	ancho = 5;
+	resultado = bitfield_clear(dato, ancho, inicio);
+	/* ----------- Función bitfield_clear ----------- */
 
   /* USER CODE END 1 */
 
@@ -246,6 +274,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void zeros(uint32_t *vec, uint32_t longitud){
+	  // Notar que se usa > y no ≥ por el tipo uint
+	  for(uint8_t i = longitud; i > 0; i--){
+		  vec[i-1] = 0;
+	  }
+}
 
 /* USER CODE END 4 */
 

@@ -9,7 +9,7 @@
 En este repositorio se encuentran los códigos desarrollados durante el cursado de la asignatura.  
 El material se encuentra distribuído de la siguiente manera:  
 
--**Carpeta Workspace:** Códigos en C separados por clases.  
+-**Workspace:** Códigos en C separados por clases.  
 
 -**PythonScripts:** Códigos desarrollados en Python para complementar actividades desarrolladas en clases.  
 
