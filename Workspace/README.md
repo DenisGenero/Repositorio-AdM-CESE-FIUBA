@@ -2,7 +2,7 @@
 
 ***
 
-Los ocntenidos de los proyectos son:  
+Los contenidos de los proyectos son:  
 
 **Clase3y4:** Implementación de:  
 - asm_sum: introducir cómo se realiza el llamado a una función implementada en Assembly y recuperar parámetros.  
@@ -15,5 +15,4 @@ Los ocntenidos de los proyectos son:
 - Filtro de media móvil: función en C y Assembly. Corroboración con script de Python.  
 
 **Clase6:** Implementación de:  
--
-
+- A definir...  

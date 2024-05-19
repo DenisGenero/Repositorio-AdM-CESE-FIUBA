@@ -61,17 +61,37 @@
 // Valor de retorno: void
 .thumb_func
 	asm_stack:
-		// Resguardamos el valor de los registros (5 registros)
-		push {r4 - r8}
-		// Se recupera el 5° parámetro
-		ldr r4, [SP, 20] // → 20 = 4(32 bits)*5(registros: r4-r8)
-		// Se recupera el 6° parámetro
-		ldr r5, [SP, 24]
+        // ANTES del push, el Stack se organiza de la siguiente manera:
+        //      Dato       | Dirección
+        // -----------------------------
+        // Stack frame     |
+        // ...             |
+        // 6° parámetro    | SP + 4
+        // 5° parámetro    |   SP   <--
 
-		// Recuperamos los valores
-		pop {r4 - r8}
-		// Volvemos al main
-		bx lr
+        push {r4 - r8} // Se resguardan los registros
+        // LUEGO del push, el Stack queda:
+        //      Dato       | Dirección
+        // -----------------------------
+        // Stack frame     |
+        // ...             |
+        // 6° parámetro    | SP + 24
+        // 5° parámetro    | SP + 20
+        // Resguardo de r4 | SP + 16
+        // Resguardo de r5 | SP + 12
+        // Resguardo de r6 | SP + 8
+        // Resguardo de r7 | SP + 4
+        // Resguardo de r8 |   SP   <--
+
+        // Se recupera el 5° parámetro: ldr no afecta al SP
+        ldr r4, [SP, 20] // r4 = *(SP + 20)
+        // Se recupera el 6° parámetro
+        ldr r5, [SP, 24] // r5 = *(SP + 24)
+
+        // Se devuelven los valores
+        pop {r4 - r8}
+        // Volvemos al main
+        bx lr
 
 // Prototipo en archivo.h:
 // void asm_zeros(uint32_t * vector, uint32_t longitud)
