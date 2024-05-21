@@ -18,11 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "asm_func.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "asm_func.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
