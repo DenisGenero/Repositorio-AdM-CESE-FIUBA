@@ -5,6 +5,14 @@
 
 .global asm_MediaMovil
 
+// Prototipo en archivo .h:
+// void asm_MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud)
+
+// Parámetros:
+//  r0: dirección de vectorIn
+//  r1: dirección de vectorOut
+//  r2: longitud de ambos vectores
+
 #define SAMPLE_OFFSET	4
 #define WINDOW_SIZE	(2*SAMPLE_OFFSET + 1)
 .thumb_func
