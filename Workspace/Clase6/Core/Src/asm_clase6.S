@@ -24,26 +24,26 @@
 		mov r9, #0		// acumulador
 		sub r3, #1		// longitud = longitud - 1
 	// Loop principal
-	_for13:
-    	sub r6, r5, r4	// r6 = r5 - r4 (n-l)
-    	ldrh r7, [r0, r5, LSL #1]  // x[n]
-    	ldrh r8, [r1, r6, LSL #1]  // y[n-l]
+	_for1:
+		sub r6, r5, r4	// r6 = r5 - r4 (n-l)
+		ldrh r7, [r0, r5, LSL #1]  // x[n]
+		ldrh r8, [r1, r6, LSL #1]  // y[n-l]
 		//mul r7, r8	// r7 = x[n]*y[n-l]
 		//add r9, r7	// acumulador = acumulador + x[n]*y[n-l]
 		mla r9, r7, r8, r9	// r9 = (r7*r8) + r9
 		cmp r5, r3		// n == longitud - 1?
 		itt eq			// si es cierto:
 		streq r9, [r2, r4, LSL #2]  // Terminó el ciclo, se guarda el resultado acumulado
-		beq _for14		// Se pasa al otro bucle, donde se incrementa l
+		beq _for2		// Se pasa al otro bucle, donde se incrementa l
 		add r5, #1		// Si el proceso continúan, incremento r5
-		b _for13
+		b _for1
 
-	_for14:
+	_for2:
 		mov r9, #0  // Se resetea el acumulador
 		add r4, #1  // Se incrementa l
 		mov r5, r4  // n = l, ya que para n menores la comparación no tiene sentido (n<0)
 		cmp r4, r3  // Si l == longitud, termina la función
-		bls _for13  // Sino se sigue iterando
+		bls _for1  // Sino se sigue iterando
 
 		pop {r4-r9}
 		bx lr
@@ -66,18 +66,18 @@
 		sub r3, #1 		// longitud = longitud - 1
 
 	// Bucle interior
-	_for15:
+	_for3:
 		sub r6, r5, r4 // r6 = r5 - r4 (n-l)
 		ldr r7, [r0, r5, LSL #1]  // x[n], x[n+1]
 		ldr r8, [r1, r6, LSL #1]  // y[n-l], y[(n+1)-l]
 		smlad r9, r7, r8, r9	 // r9 = x[n]*y[n-l] + x[n+1]*y[(n+1)- l]
 		add r5, #2	  	// n = n + 2
 		cmp r5, r3  	// n >= longitud - 1?
-		bhs _for16 		// Si es verdad se va al bucle para almacenar
-		b _for15
+		bhs _for4 		// Si es verdad se va al bucle para almacenar
+		b _for3
 
 	// Bucle exterior
-	_for16:
+	_for4:
 		sub r5, #1		// Si l es impar, el n está afuera del vector
 		ands r10, r4, #1
 		itttt ne		 // l es impar?
@@ -90,7 +90,7 @@
 		add r4, #1  	// l = l + 1
 		mov r5, r4  	// n = l, ya que para n menores la comparación no tiene sentido (n<0)
 		cmp r4, r3  	// Si l < longitud-1? Si es verdad termina la función
-		blo _for15  	// Sino se sigue iterando
+		blo _for3  	// Sino se sigue iterando
 
 		// Se calcula el último valor
 		sub r6, r5, r4 // r6 = r5 - r4 (n-l)
