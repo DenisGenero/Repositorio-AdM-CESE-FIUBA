@@ -79,7 +79,7 @@ int main(void)
 
     DWT->CYCCNT = 0;
     corr(vecX, vecY, vecCorr_C, lon);
-    ciclos_C = DWT->CYCCNT;
+    ciclos_C = DWT->CYCCNT;  // 41636 O2
 
     DWT->CYCCNT = 0;
     asm_corr_ASM(vecX, vecY, vecCorr_ASM, lon);
@@ -87,6 +87,7 @@ int main(void)
 
     DWT->CYCCNT = 0;
     asm_corr_DSP(vecX, vecY, vecCorr_DSP, lon);
+    ciclos_DSP = DWT->CYCCNT;
 
 
   /* USER CODE END 1 */
