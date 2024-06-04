@@ -77,9 +77,8 @@ asm_corr_DSP:
 
 	// Bucle exterior
 	_for16:
-		// Si l es impar, se debe determinar de nuevo n y n-l:
-		sub r5, #1		// n = n - 1 (sino n está fuera del vector)
-		sub r6, r5, r4  // r6 = r5 - r4 (n - l, nuevamente)
+		// Si l es impar, se debe determinar de nuevo n-l:
+		sub r6, r5, r4  // r6 = r5 - r4 (n - l)
 		ands r10, r4, #1 // si: l and 1 = 1, entonces l es impar
 		ittt ne		// Si l impar, entonces:
 		ldrhne r7, [r0, r5, LSL #1] // Último valor de vectorX
