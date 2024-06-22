@@ -4,6 +4,7 @@
 
 /* Ejercicio 1 */
 void productoEscalar32(uint32_t *vectorIn, uint32_t *vectorOut, uint32_t longitud, uint16_t escalar){
+    // IMPORTANTE: no colocar i>=0, ya que el tipo de datos es sin signo!
     for (uint8_t i = longitud; i > 0; i --){
         vectorOut[i-1] = vectorIn[i-1]*escalar;
     }
