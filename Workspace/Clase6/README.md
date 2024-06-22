@@ -10,5 +10,5 @@
 
 **Script de Python:**  
 Archivos que sirven de complemento para corroborar el correcto funcionamiento de las funciones implementadas en C y Assembly.  
-Para más detalles sobre cómo ejecutar el ejemplo se puede seguir el siguiente instructivo disponible en el Campus Virtual:  
+Para más detalles sobre cómo ejecutar el ejemplo se pueden seguir pasos muy similares a los indicados en el instructivo disponible en el Campus Virtual (filtro de media móvil):  
 https://docs.google.com/document/d/1zqv7ySWRQnv1aJ86H0eWHwjXCSf8PKRgxZK9qYadcH8/edit#heading=h.i5grnkbqdp4n  
