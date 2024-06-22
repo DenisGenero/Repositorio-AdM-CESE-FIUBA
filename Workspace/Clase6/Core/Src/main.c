@@ -17,11 +17,11 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <functions.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "asm_func.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,27 +68,31 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
     DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
-    uint32_t ciclos_C, ciclos_ASM, ciclos_DSP;
+    uint32_t ciclos_C, ciclos_Intr, ciclos_ASM, ciclos_DSP;
 
     int16_t vecX[] = { };
     uint32_t lon = sizeof(vecX)/sizeof(vecX[0]);
     int16_t vecY[] = { };
     int16_t vecCorr_C[lon];
+    int16_t vecCorr_Intr[lon];
     int16_t vecCorr_ASM[lon];
     int16_t vecCorr_DSP[lon];
 
     DWT->CYCCNT = 0;
     corr(vecX, vecY, vecCorr_C, lon);
-    ciclos_C = DWT->CYCCNT;  // 41636 O2
+    ciclos_C = DWT->CYCCNT;
 
     DWT->CYCCNT = 0;
-    asm_corr_ASM(vecX, vecY, vecCorr_ASM, lon);
+    corr_intrinsic(vecX, vecY, vecCorr_Intr, lon);
+    ciclos_Intr = DWT->CYCCNT;
+
+    DWT->CYCCNT = 0;
+    corr_ASM(vecX, vecY, vecCorr_ASM, lon);
     ciclos_ASM = DWT->CYCCNT;
 
     DWT->CYCCNT = 0;
-    asm_corr_DSP(vecX, vecY, vecCorr_DSP, lon);
+    corr_DSP(vecX, vecY, vecCorr_DSP, lon);
     ciclos_DSP = DWT->CYCCNT;
-
 
   /* USER CODE END 1 */
 
@@ -250,17 +254,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void corr(int16_t *vectorX, int16_t *vectorY, int16_t *vectorCorr, uint32_t longitud){
-    int32_t sample;
-    for(uint32_t l = 0; l < longitud; l ++){
-        sample = 0;
-        for(uint32_t n = l; n < longitud; n ++){
-            sample += vectorX[n]*vectorY[n-l];
-        }
-        vectorCorr[l] = (int16_t)sample;
-    }
-}
-
 
 /* USER CODE END 4 */
 

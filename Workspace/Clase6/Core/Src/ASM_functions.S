@@ -3,8 +3,8 @@
 .syntax unified
 .thumb
 
-.global asm_corr_ASM
-.global asm_corr_DSP
+.global corr_ASM
+.global corr_DSP
 
 
 // Prototipo en archivo .h:
@@ -17,7 +17,7 @@
 //  r3: longitud de los vectores
 
 .thumb_func
-	asm_corr_ASM:
+	corr_ASM:
 		push {r4-r9}	// Resguardar registros
 		mov r4, #0		// índice l = 0
 		mov r5, #0		// índice n = 0
@@ -56,7 +56,9 @@
 //  r1: dirección de vectorY
 //  r2: dirección de vectorCorr
 //  r3: longitud de los vectores
-asm_corr_DSP:
+
+.thumb_func
+corr_DSP:
 		push {r4-r10}
 		mov r4, #0  	// índice l
 		mov r5, #0  	// índice n
