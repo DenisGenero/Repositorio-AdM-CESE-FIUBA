@@ -30,7 +30,7 @@
 
 	_loop1:
 		sub r2, #1	// longitud = longitud - 1
-		// LSL #2: es para desplazarnos de a 4 bites
+		// LSL #2: es para desplazarnos de a 4 bytes
 		ldr r4, [r0, r2, LSL #2] // Se carga desde el último valor hacia el primero
 		mul r4, r4, r3	// r4 = vectorIn*escalar
 		str r4, [r1, r2, LSL #2] // Se guarda el resultado
