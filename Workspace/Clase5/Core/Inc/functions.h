@@ -5,6 +5,8 @@
 #include "config.h"
 #include "stm32g4xx_hal.h"
 
+extern UART_HandleTypeDef huart2;
+
 /* Clase 5*/
 /* Funciones en implementadas en C */
 void MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud);
