@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "functions.h"
+#include "senoRuido.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
