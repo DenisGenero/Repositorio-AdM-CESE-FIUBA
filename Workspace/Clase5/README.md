@@ -11,5 +11,7 @@ https://docs.google.com/document/d/1tLKs_rYYyTVa9waYE1NFW5jg_mPJ3Ra1IOnu-qKCysw/
 
 **Script de Python:**  
 Archivos que sirven de complemento para corroborar el correcto funcionamiento del filtro implementado en C y Assembly.  
-Para más detalles sobre cómo ejecutar el ejemplo se puede seguir el siguiente instructivo disponible en el Campus Virtual:  
-https://docs.google.com/document/d/1zqv7ySWRQnv1aJ86H0eWHwjXCSf8PKRgxZK9qYadcH8/edit#heading=h.i5grnkbqdp4n  
+En primer lugar se debe ejecutar el Script. Esto generará el archivo senoRuido.h en el path que se indique (si se deja 
+vacío, se pedirá que se ingrese una dirección por consola). Luego, el Script quedará a la espera de datos provenientes de la consola
+uart. En este momento se debe compilar y ejecutar el firmware, el cuál efectuará los filtrados y enviará los datos procesados
+al Script para que se grafiquen.

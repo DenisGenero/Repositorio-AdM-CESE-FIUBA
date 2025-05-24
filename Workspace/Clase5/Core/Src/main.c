@@ -70,17 +70,16 @@ int main(void)
     DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
     uint32_t ciclos_C, ciclos_ASM;
 
-    uint16_t senoRuido[] = { };
-    uint32_t lon = sizeof(senoRuido)/sizeof(senoRuido[0]);
-    uint16_t senoFilt_C[lon];
-    uint16_t senoFilt_ASM[lon];
+    extern uint16_t seno_Ruido[VEC_SIZE];
+    uint16_t senoFilt_C[VEC_SIZE];
+    uint16_t senoFilt_ASM[VEC_SIZE];
 
     DWT->CYCCNT = 0;
-    MediaMovil(senoRuido, senoFilt_C, lon);
+    MediaMovil(seno_Ruido, senoFilt_C, VEC_SIZE);
     ciclos_C = DWT->CYCCNT;
 
     DWT->CYCCNT = 0;
-    asm_MediaMovil(senoRuido, senoFilt_ASM, lon);
+    asm_MediaMovil(seno_Ruido, senoFilt_ASM, VEC_SIZE);
     ciclos_ASM = DWT->CYCCNT;
 
   /* USER CODE END 1 */
@@ -105,7 +104,11 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  
+  // Llamar a la función luego de inicializar la USART2
+  ExportarVector(senoFilt_C, VEC_SIZE, "C", "");
+  ExportarVector(senoFilt_ASM, VEC_SIZE, "asm", "end");
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
