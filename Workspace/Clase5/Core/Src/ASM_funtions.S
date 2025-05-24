@@ -13,11 +13,19 @@
 //  r1: dirección de vectorOut
 //  r2: longitud de ambos vectores
 
+// Uso de registros:
+//  r3 --> índice i
+//  r4 --> límite superior e índice j
+//  r5 --> límite inferior
+//  r6 --> carga los elementos de vectorIn
+//  r7 --> acumulador para almacenar en vectorOut
+//  r8 --> L (largo de la ventana)
+
 #define SAMPLE_OFFSET	4
 #define WINDOW_SIZE	(2*SAMPLE_OFFSET + 1)
 .thumb_func
     asm_MediaMovil:
-		push {r4-r10}		// Se resguardan los registros
+		push {r4-r8}		// Se resguardan los registros
 		mov r8, WINDOW_SIZE // r8 = L (Cantidad de muestras de la ventana)
 		mov r3, r2		// índice para recorrer el vector
 		sub r2, #1		// Resguardo del valor: longitud - 1
@@ -46,5 +54,5 @@
 		sub r4, #1		// Si no es verdad: Se decrementa el índice de la ventana
 		b _for4 		// Se vuelve a iterar
 	_exit6:
-		pop {r4-r10}
+		pop {r4-r8}
 		bx lr
