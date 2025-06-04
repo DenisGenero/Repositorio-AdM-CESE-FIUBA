@@ -17,11 +17,13 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <functions.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "functions.h"
+#include "string.h"
+#include "correlation.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,29 +71,28 @@ int main(void)
   /* USER CODE BEGIN 1 */
     DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
     uint32_t ciclos_C, ciclos_Intr, ciclos_ASM, ciclos_DSP;
-
-    int16_t vecX[] = { };
-    uint32_t lon = sizeof(vecX)/sizeof(vecX[0]);
-    int16_t vecY[] = { };
-    int16_t vecCorr_C[lon];
-    int16_t vecCorr_Intr[lon];
-    int16_t vecCorr_ASM[lon];
-    int16_t vecCorr_DSP[lon];
+	
+	extern int16_t vecX[VEC_SIZE];
+	extern int16_t vecY[VEC_SIZE];
+	int16_t vecCorr_C[VEC_SIZE];
+	int16_t vecCorr_Intr[VEC_SIZE];
+	int16_t vecCorr_ASM[VEC_SIZE];
+	int16_t vecCorr_DSP[VEC_SIZE];
 
     DWT->CYCCNT = 0;
-    corr(vecX, vecY, vecCorr_C, lon);
+    corr(vecX, vecY, vecCorr_C, VEC_SIZE);
     ciclos_C = DWT->CYCCNT;
 
     DWT->CYCCNT = 0;
-    corr_intrinsic(vecX, vecY, vecCorr_Intr, lon);
+    corr_intrinsic(vecX, vecY, vecCorr_Intr, VEC_SIZE);
     ciclos_Intr = DWT->CYCCNT;
 
     DWT->CYCCNT = 0;
-    corr_ASM(vecX, vecY, vecCorr_ASM, lon);
+    corr_ASM(vecX, vecY, vecCorr_ASM, VEC_SIZE);
     ciclos_ASM = DWT->CYCCNT;
 
     DWT->CYCCNT = 0;
-    corr_DSP(vecX, vecY, vecCorr_DSP, lon);
+    corr_DSP(vecX, vecY, vecCorr_DSP, VEC_SIZE);
     ciclos_DSP = DWT->CYCCNT;
 
   /* USER CODE END 1 */
@@ -116,7 +117,11 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  
+  ExportarVector(vecCorr_C, VEC_SIZE, "C", "");
+  ExportarVector(vecCorr_ASM, VEC_SIZE, "asm", "");
+  ExportarVector(vecCorr_DSP, VEC_SIZE, "DSP", "end");
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
