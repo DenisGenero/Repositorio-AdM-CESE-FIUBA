@@ -9,6 +9,7 @@
 - corr_DSP: la función anterior pero optimizada con instrucciones DSP.  
 
 **Script de Python:**  
-Archivos que sirven de complemento para corroborar el correcto funcionamiento de las funciones implementadas en C y Assembly.  
-Para más detalles sobre cómo ejecutar el ejemplo se pueden seguir pasos muy similares a los indicados en el instructivo disponible en el Campus Virtual (filtro de media móvil):  
-https://docs.google.com/document/d/1zqv7ySWRQnv1aJ86H0eWHwjXCSf8PKRgxZK9qYadcH8/edit#heading=h.i5grnkbqdp4n  
+Archivos que sirven de complemento para corroborar el correcto funcionamiento de las funciones implementadas en C, Assembly Y Assembly con instrucciones para DSP.  
+En primer lugar se debe ejecutar el Script. Esto generará los archivos config.h y correlation.h en el path que se indique (si se deja vacío, se pedirá que se ingrese una dirección 
+por consola). Luego, el Script quedará a la espera de datos provenientes de la consola uart. En este momento se debe compilar y ejecutar el firmware, el cuál efectuará la correlación
+ y enviará los datos procesados al Script para que se grafiquen.  
