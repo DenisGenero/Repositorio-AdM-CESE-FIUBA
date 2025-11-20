@@ -16,13 +16,12 @@ vacío, se pedirá que se ingrese una dirección por consola). Luego, el Script 
 uart. En este momento se debe compilar y ejecutar el firmware, el cuál efectuará los filtrados y enviará los datos procesados
 al Script para que se grafiquen.  
 
----
 
 **Para hacer funcionar el Script (comandos bash):**  
 - Ejecutar una sola vez:  
-    - Crear un entorno virtual: python -m venv .venv  
-    - Instalar dependencias: pip install -r requirements.txt  
+    - Crear un entorno virtual: `python -m venv .venv`  
+    - Instalar dependencias: `pip install -r requirements.txt`  
 - Cada vez que se quiera ejecutar el Script:  
     - Activar el entorno virtual:  
-        - En Windows: source .venv/Scripts/activate  
-        - En Linux: source ./.venv/bin/activate  
+        - En Windows: `source .venv/Scripts/activate`  
+        - En Linux: `source ./.venv/bin/activate`  
