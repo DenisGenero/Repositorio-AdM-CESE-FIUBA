@@ -16,6 +16,14 @@
 //  r2: dirección de vectorCorr
 //  r3: longitud de los vectores
 
+// Uso de registros
+//  r4 --> índice l
+//  r5 --> índice n
+//  r6 --> n-l
+//  r7 --> x[n]
+//  r8 --> y[n]
+//  r9 --> acumulador
+
 .thumb_func
 	corr_ASM:
 		push {r4-r9}	// Resguardar registros
@@ -56,6 +64,16 @@
 //  r1: dirección de vectorY
 //  r2: dirección de vectorCorr
 //  r3: longitud de los vectores
+
+// Uso de registros
+//  r4 --> índice l
+//  r5 --> índice n
+//  r6 --> n-l
+//  r7 --> x[n]
+//  r8 --> y[n]
+//  r9 --> acumulador
+//  r10 --> evaluar paridad de l
+
 
 .thumb_func
 corr_DSP:
@@ -100,6 +118,7 @@ corr_DSP:
 		ldrh r8, [r1, r6, LSL #1]
 		mla r9, r7, r8, r9  // acumulador = r7*r8 + acumulador
 		strh r9, [r2, r4, LSL #1] // Se guarda el resultado acumulado
+		/* *** Se puede prescindir de este último bloque de código? *** */
 
 		pop {r4-r10}
 		bx lr
