@@ -21,7 +21,7 @@
 //  r5 --> índice n
 //  r6 --> n-l
 //  r7 --> x[n]
-//  r8 --> y[n]
+//  r8 --> y[n-l]
 //  r9 --> acumulador
 
 .thumb_func
@@ -69,8 +69,8 @@
 //  r4 --> índice l
 //  r5 --> índice n
 //  r6 --> n-l
-//  r7 --> x[n]
-//  r8 --> y[n]
+//  r7 --> x[n], x[n+1]
+//  r8 --> y[n-l], y[(n+1)-l]
 //  r9 --> acumulador
 //  r10 --> evaluar paridad de l
 
