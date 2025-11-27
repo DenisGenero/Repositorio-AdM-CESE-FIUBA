@@ -13,3 +13,13 @@ Archivos que sirven de complemento para corroborar el correcto funcionamiento de
 En primer lugar se debe ejecutar el Script. Esto generará los archivos config.h y correlation.h en el path que se indique (si se deja vacío, se pedirá que se ingrese una dirección 
 por consola). Luego, el Script quedará a la espera de datos provenientes de la consola uart. En este momento se debe compilar y ejecutar el firmware, el cuál efectuará la correlación
  y enviará los datos procesados al Script para que se grafiquen.  
+
+**Para hacer funcionar el Script (comandos bash):**  
+- Ejecutar una sola vez:  
+    - Crear un entorno virtual: `python -m venv .venv`  
+    - Instalar dependencias: `pip install -r requirements.txt`  
+- Cada vez que se quiera ejecutar el Script:  
+    - Activar el entorno virtual:  
+        - En Windows: `source .venv/Scripts/activate`  
+        - En Linux: `source ./.venv/bin/activate`  
+- Para ejecutar el Script: `python Correlacion.py`  

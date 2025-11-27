@@ -25,3 +25,4 @@ al Script para que se grafiquen.
     - Activar el entorno virtual:  
         - En Windows: `source .venv/Scripts/activate`  
         - En Linux: `source ./.venv/bin/activate`  
+- Para ejecutar el Script: `python FiltroMediaMovil.py`  
