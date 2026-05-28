@@ -6,53 +6,55 @@
 .global asm_MediaMovil
 
 // Prototipo en archivo .h:
-// void asm_MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud)
+// void asm_MediaMovil(int16_t *signal_noise, int16_t *signal_fil, uint16_t longitud)
 
 // Parámetros:
-//  r0: dirección de vectorIn
-//  r1: dirección de vectorOut
+//  r0: dirección de signal_noise
+//  r1: dirección de signal_fil
 //  r2: longitud de ambos vectores
 
 // Uso de registros:
 //  r3 --> índice i
 //  r4 --> límite superior e índice j
 //  r5 --> límite inferior
-//  r6 --> carga los elementos de vectorIn
-//  r7 --> acumulador para almacenar en vectorOut
+//  r6 --> carga los elementos de signal_noise
+//  r7 --> acumulador para almacenar en signal_fil
 //  r8 --> L (largo de la ventana)
 
 #define SAMPLE_OFFSET	4
 #define WINDOW_SIZE	(2*SAMPLE_OFFSET + 1)
 .thumb_func
     asm_MediaMovil:
-		push {r4-r8}		// Se resguardan los registros
-		mov r8, WINDOW_SIZE // r8 = L (Cantidad de muestras de la ventana)
-		mov r3, r2		// índice para recorrer el vector
-		sub r2, #1		// Resguardo del valor: longitud - 1
+		push {r4-r8}                  // Se resguardan los registros
+		mov r8, WINDOW_SIZE           // r8 = L (Cantidad de muestras de la ventana)
+		mov r3, r2                    // índice para recorrer el vector
+		sub r2, #1                    // Resguardo del valor: longitud - 1
+	
 	// Bucle que recorre el vector de muestras
-	_for3:
-		subs r3, #1		// Decrementamos el índice
-		bmi _exit6		// Si r3 < 0, terminó la función: volver a main
-		mov r7, #0		// Reset del acumulador
-		add r4, r3, SAMPLE_OFFSET // Límite superior e índice para recorrer en la ventana
-		cmp r4, r2		// Comparo con la cantidad de muestras
-		it hi			// Límite superior > (longitud-1)?
-		movhi r4, r2		// Si es verdad: límite superior = longitud - 1
-		subs r5, r3, SAMPLE_OFFSET // Límite inferior
-		it mi			// Límite inferior < 0 ?
-		movmi r5, 0		// Si es verdad: límite inferior = 0
+	_loop_principal:
+		subs r3, #1                   // Decrementamos el índice
+		bmi _exit6                    // Si r3 < 0, terminó la función: volver a main
+		mov r7, #0                    // Reset del acumulador
+		add r4, r3, SAMPLE_OFFSET     // Límite superior e índice para recorrer en la ventana
+		cmp r4, r2                    // Comparo con la cantidad de muestras
+		it hi                         // Límite superior > (longitud-1)?
+		  movhi r4, r2                // Si es verdad: límite superior = longitud - 1
+		subs r5, r3, SAMPLE_OFFSET    // Límite inferior
+		it mi                         // Límite inferior < 0 ?
+		  movmi r5, 0                 // Si es verdad: límite inferior = 0
+		// Propuesta de mejora: L = r4 - r5 + 1 (limite superior - limite inferior + 1)
 
 	// Bucle que recorre las muestras en la ventana
-	_for4:
-		ldrh r6, [r0, r4, LSL #1] // Se cargan elementos para ir operando
-		add r7, r6		// Se suma en el acumulador
+	_loop_ventana:
+		ldrh r6, [r0, r4, LSL #1]     // Se cargan elementos para ir operando
+		add r7, r6                    // Se suma en el acumulador
 		cmp r4, r5
-		ittt eq			// Índice == límite inferior?
-		udiveq r7, r8		// Si es verdad: acumulador = acumulador / WINDOW_SIZE
-		strheq r7, [r1, r3, LSL #1] // Se almacena el valor filtrado
-		beq _for3 		// Se vuelve al bucle de muestras
-		sub r4, #1		// Si no es verdad: Se decrementa el índice de la ventana
-		b _for4 		// Se vuelve a iterar
+		ittt eq                       // Índice == límite inferior?
+		  udiveq r7, r8               // Si es verdad: acumulador = acumulador / WINDOW_SIZE
+		  strheq r7, [r1, r3, LSL #1] // Se almacena el valor filtrado
+		  beq _loop_principal         // Se vuelve al bucle de muestras
+		sub r4, #1                    // Si no es verdad: Se decrementa el índice de la ventana
+		b _loop_ventana               // Se vuelve a iterar
 	_exit6:
 		pop {r4-r8}
 		bx lr

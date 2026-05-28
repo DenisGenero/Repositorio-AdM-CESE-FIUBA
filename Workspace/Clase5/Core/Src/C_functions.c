@@ -1,14 +1,17 @@
 /* Clase 5 */
 
-#include "functions.h"
 #include <stdio.h>
 #include <string.h>
+#include "functions.h"
+#include "config.h"
 
 /* Ejercicio de ejemplo: implementación de un filtro de media móvil */
-void MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud){
+void MediaMovil(int16_t *signal_noise, int16_t *signal_fil, uint16_t longitud){
     int32_t limiteSup, limiteInf;
     uint8_t SampleOffset = 4;
     uint8_t L = 2*SampleOffset + 1;
+	
+	// Bucle principal
     for (int32_t i = longitud; i > 0; i--){
         // Se define el límite superior para no tomar muestras fuera del vector
         limiteSup = (i - 1) + SampleOffset;
@@ -20,11 +23,16 @@ void MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud){
         if ( limiteInf < 0){
             limiteInf = 0;
         }
-        vectorOut[i-1] = 0;
+		// Se define variable de 32 bits para evitar overflow
+        int32_t acumulador = 0;
+		
+		// Bucle ventana
         for (int32_t j = limiteSup; j >= limiteInf; j--){
-            vectorOut[i-1] += vectorIn[j];
+            acumulador += signal_noise[j];
         }
-        vectorOut[i-1] /= L;
+        vectorOut[i-1] = acumulador/L;
+		// Propuesta para abarcar los extermos:
+		//signal_fil[i-1] = acumulador / ((limiteSup - limiteInf) + 1);
     }
 }
 
@@ -36,22 +44,27 @@ void MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud){
  * - EOT: End Of Transmition. Para indicar que no se enviarán más datos.
  *   Puede ser "", si se seguirá enviando datos, o "end" para finalizar.
 */
-void ExportarVector(uint16_t* vector, uint32_t len, char* lenguaje, char* EOT) {
+void ExportarVector(int16_t* vector, uint16_t len, ExportType lenguaje, ExportMode mode) {
+	char newline = '\n';
     // Enviar encabezado: "C\n" o "asm\n"
-    HAL_UART_Transmit(&huart2, (uint8_t*)lenguaje, strlen(lenguaje), HAL_MAX_DELAY);
-    char newline = '\n';
-    HAL_UART_Transmit(&huart2, (uint8_t*)&newline, 1, HAL_MAX_DELAY);
+	if (EXPORT_TYPE_C == lenguaje){
+		HAL_UART_Transmit(&huart2, (uint8_t*)"C", 1, HAL_MAX_DELAY);
+	} else {
+		HAL_UART_Transmit(&huart2, (uint8_t*)"asm", 3, HAL_MAX_DELAY);
+	}
+	HAL_UART_Transmit(&huart2, (uint8_t*)&newline, 1, HAL_MAX_DELAY);
 
     // Enviar datos binarios (2 bytes por entero)
-    for (uint32_t i = 0; i < len; i++) {
-        HAL_UART_Transmit(&huart2, (uint8_t*)&vector[i], sizeof(uint16_t), HAL_MAX_DELAY);
-    }
+	uint32_t total_bytes = len * sizeof(uint16_t);
+	HAL_UART_Transmit(&huart2, (uint8_t*)vector, total_bytes, HAL_MAX_DELAY);
 
     // Enviar fin de señal: 0xFFFF
     uint16_t fin = 0xFFFF;
     HAL_UART_Transmit(&huart2, (uint8_t*)&fin, sizeof(uint16_t), HAL_MAX_DELAY);
 
-    // Enviar EOT: "end\n" para fin de transmisión
-    HAL_UART_Transmit(&huart2, (uint8_t*)EOT, strlen(EOT), HAL_MAX_DELAY);
+    // Enviar "end\n" si es el fin de la transmisión
+    if (EXPORT_MODE_CLOSE_FILE == mode) {
+		HAL_UART_Transmit(&huart2, (uint8_t*)"end", 3, HAL_MAX_DELAY);
+	}
     HAL_UART_Transmit(&huart2, (uint8_t*)&newline, 1, HAL_MAX_DELAY);
 }

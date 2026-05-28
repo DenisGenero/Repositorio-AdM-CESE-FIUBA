@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "functions.h"
-#include "senoRuido.h"
+#include "signalRuido.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,20 +68,17 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-    DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
-    uint32_t ciclos_C, ciclos_ASM;
+    extern int16_t senial_Ruido[VEC_SIZE];
+	int16_t signalFilt_C[VEC_SIZE];
+	int16_t signalFilt_ASM[VEC_SIZE];
 
-    extern uint16_t seno_Ruido[VEC_SIZE];
-    uint16_t senoFilt_C[VEC_SIZE];
-    uint16_t senoFilt_ASM[VEC_SIZE];
+	DWT->CYCCNT = 0;
+	MediaMovil(senial_Ruido, signalFilt_C, VEC_SIZE);
+	ciclos_C = DWT->CYCCNT;
 
-    DWT->CYCCNT = 0;
-    MediaMovil(seno_Ruido, senoFilt_C, VEC_SIZE);
-    ciclos_C = DWT->CYCCNT;
-
-    DWT->CYCCNT = 0;
-    asm_MediaMovil(seno_Ruido, senoFilt_ASM, VEC_SIZE);
-    ciclos_ASM = DWT->CYCCNT;
+	DWT->CYCCNT = 0;
+	asm_MediaMovil(senial_Ruido, signalFilt_ASM, VEC_SIZE);
+	ciclos_ASM = DWT->CYCCNT;
 
   /* USER CODE END 1 */
 
@@ -107,8 +104,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   
   // Llamar a la función luego de inicializar la USART2
-  ExportarVector(senoFilt_C, VEC_SIZE, "C", "");
-  ExportarVector(senoFilt_ASM, VEC_SIZE, "asm", "end");
+  ExportarVector(signalFilt_C, VEC_SIZE, EXPORT_TYPE_C, EXPORT_MODE_CONTINUE);
+  ExportarVector(signalFilt_ASM, VEC_SIZE, EXPORT_TYPE_ASM, EXPORT_MODE_CLOSE_FILE);
   
   /* USER CODE END 2 */
 

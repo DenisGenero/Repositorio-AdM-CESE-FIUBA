@@ -1,3 +1,4 @@
 import numpy as np
 
-senoFilt_C = np.zeros(100)
+signalFilt_C = np.zeros(1000)
+

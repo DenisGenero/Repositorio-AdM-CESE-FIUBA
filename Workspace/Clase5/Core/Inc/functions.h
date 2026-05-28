@@ -7,14 +7,14 @@
 
 extern UART_HandleTypeDef huart2;
 
-/* Clase 5*/
-/* Funciones en implementadas en C */
-void MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud);
+/* Clase 5 */
+/* Funciones implementadas en C */
+void MediaMovil(int16_t *signal_noise, int16_t *signal_fil, uint16_t longitud);
 
-/* Funciones en implementadas en Assembly */
-void asm_MediaMovil(uint16_t *vectorIn, uint16_t *vectorOut, uint32_t longitud);
+/* Funciones implementadas en Assembly */
+void asm_MediaMovil(int16_t *signal_noise, int16_t *signal_fil, uint16_t longitud);
 
 /* Función auxiliar */
-void ExportarVector(uint16_t* vector, uint32_t len, char* lenguaje, char* EOT);
+void ExportarVector(int16_t* vector, uint16_t len, ExportType lenguaje, ExportMode mode);
 
 #endif /* INC_FUNCTIONS_H_ */

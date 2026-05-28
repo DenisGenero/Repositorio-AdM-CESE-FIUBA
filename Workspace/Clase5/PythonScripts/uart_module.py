@@ -13,7 +13,7 @@ def guardar_archivo(nombre_archivo, nombre_vector, datos):
 
 def leer_uart():
     archivo = "Signal_"
-    vector = "senoFilt_"
+    vector = "signalFilt_"
     com_num = input("Ingresá el número del COM (ej: 5 para COM5): ").strip()
     puerto = f"COM{com_num}"
 

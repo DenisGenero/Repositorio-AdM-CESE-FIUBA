@@ -1,3 +1,4 @@
 import numpy as np
 
-senoFilt_ASM = np.zeros(100)
+signalFilt_ASM = np.zeros(1000)
+
