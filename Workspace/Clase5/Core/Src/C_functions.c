@@ -7,12 +7,12 @@
 
 /* Ejercicio de ejemplo: implementación de un filtro de media móvil */
 void MediaMovil(int16_t *signal_noise, int16_t *signal_fil, uint16_t longitud){
-    int32_t limiteSup, limiteInf;
+    int16_t limiteSup, limiteInf;
     uint8_t SampleOffset = 4;
     uint8_t L = 2*SampleOffset + 1;
 	
 	// Bucle principal
-    for (int32_t i = longitud; i > 0; i--){
+    for (uint16_t i = longitud; i > 0; i--){
         // Se define el límite superior para no tomar muestras fuera del vector
         limiteSup = (i - 1) + SampleOffset;
         if ( limiteSup > (longitud - 1)){
