@@ -46,11 +46,11 @@
 
 	// Bucle que recorre las muestras en la ventana
 	_loop_ventana:
-		ldrh r6, [r0, r4, LSL #1]     // Se cargan elementos para ir operando
+		ldrsh r6, [r0, r4, LSL #1]     // Se cargan elementos para ir operando
 		add r7, r6                    // Se suma en el acumulador
 		cmp r4, r5
 		ittt eq                       // Índice == límite inferior?
-		  udiveq r7, r8               // Si es verdad: acumulador = acumulador / WINDOW_SIZE
+		  sdiveq r7, r8               // Si es verdad: acumulador = acumulador / WINDOW_SIZE
 		  strheq r7, [r1, r3, LSL #1] // Se almacena el valor filtrado
 		  beq _loop_principal         // Se vuelve al bucle de muestras
 		sub r4, #1                    // Si no es verdad: Se decrementa el índice de la ventana

@@ -10,7 +10,8 @@ def generar_archivos_header(path_destino, senial):
     # 1. Generar config.h
     config_path = base_path / "config.h"
     with open(config_path, "w", encoding="utf-8") as f:
-        f.write("#ifndef CONFIG_H\n#define CONFIG_H\n\n")
+        f.write("#ifndef CONFIG_H\n")
+        f.write("#define CONFIG_H\n\n")
         f.write(f"#define VEC_SIZE    {len(senial)}\n\n")
 
         f.write("// Vector a exportar\n")
