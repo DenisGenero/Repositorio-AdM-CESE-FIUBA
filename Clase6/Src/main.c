@@ -23,7 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "functions.h"
 #include "string.h"
-#include "correlation.h"
+#include "signals_corr.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,31 +69,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-    DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
-    uint32_t ciclos_C, ciclos_Intr, ciclos_ASM, ciclos_DSP;
-	
-	extern int16_t vecX[VEC_SIZE];
-	extern int16_t vecY[VEC_SIZE];
-	int16_t vecCorr_C[VEC_SIZE];
-	int16_t vecCorr_Intr[VEC_SIZE];
-	int16_t vecCorr_ASM[VEC_SIZE];
-	int16_t vecCorr_DSP[VEC_SIZE];
-
-    DWT->CYCCNT = 0;
-    corr(vecX, vecY, vecCorr_C, VEC_SIZE);
-    ciclos_C = DWT->CYCCNT;
-
-    DWT->CYCCNT = 0;
-    corr_intrinsic(vecX, vecY, vecCorr_Intr, VEC_SIZE);
-    ciclos_Intr = DWT->CYCCNT;
-
-    DWT->CYCCNT = 0;
-    corr_ASM(vecX, vecY, vecCorr_ASM, VEC_SIZE);
-    ciclos_ASM = DWT->CYCCNT;
-
-    DWT->CYCCNT = 0;
-    corr_DSP(vecX, vecY, vecCorr_DSP, VEC_SIZE);
-    ciclos_DSP = DWT->CYCCNT;
 
   /* USER CODE END 1 */
 
@@ -117,11 +92,39 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  
-  ExportarVector(vecCorr_C, VEC_SIZE, "C", "");
-  ExportarVector(vecCorr_ASM, VEC_SIZE, "asm", "");
-  ExportarVector(vecCorr_DSP, VEC_SIZE, "DSP", "end");
-  
+
+  DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
+  volatile uint32_t ciclos_C, ciclos_Intr, ciclos_ASM, ciclos_DSP;
+
+  extern int16_t vecX[VEC_SIZE];
+  extern int16_t vecY[VEC_SIZE];
+  int32_t vecCorr_C[VEC_SIZE];
+  int32_t vecCorr_Intr[VEC_SIZE];
+  int32_t vecCorr_ASM[VEC_SIZE];
+  int32_t vecCorr_DSP[VEC_SIZE];
+
+  DWT->CYCCNT = 0;
+  corr(vecX, vecY, vecCorr_C, VEC_SIZE);
+  ciclos_C = DWT->CYCCNT;
+
+  DWT->CYCCNT = 0;
+  corr_intrinsic(vecX, vecY, vecCorr_Intr, VEC_SIZE);
+  ciclos_Intr = DWT->CYCCNT;
+
+
+  DWT->CYCCNT = 0;
+  corr_ASM(vecX, vecY, vecCorr_ASM, VEC_SIZE);
+  ciclos_ASM = DWT->CYCCNT;
+
+  DWT->CYCCNT = 0;
+  corr_DSP(vecX, vecY, vecCorr_DSP, VEC_SIZE);
+  ciclos_DSP = DWT->CYCCNT;
+
+  ExportarVector(vecCorr_C,    VEC_SIZE, EXPORT_TYPE_C,       EXPORT_MODE_CONTINUE);
+  ExportarVector(vecCorr_Intr, VEC_SIZE, EXPORT_TYPE_C_INTR,  EXPORT_MODE_CONTINUE);
+  ExportarVector(vecCorr_ASM,  VEC_SIZE, EXPORT_TYPE_ASM,     EXPORT_MODE_CONTINUE);
+  ExportarVector(vecCorr_DSP,  VEC_SIZE, EXPORT_TYPE_ASM_DSP, EXPORT_MODE_CLOSE_FILE);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
