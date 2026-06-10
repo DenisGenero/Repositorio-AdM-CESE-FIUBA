@@ -111,7 +111,6 @@ int main(void)
   corr_intrinsic(vecX, vecY, vecCorr_Intr, VEC_SIZE);
   ciclos_Intr = DWT->CYCCNT;
 
-
   DWT->CYCCNT = 0;
   corr_ASM(vecX, vecY, vecCorr_ASM, VEC_SIZE);
   ciclos_ASM = DWT->CYCCNT;

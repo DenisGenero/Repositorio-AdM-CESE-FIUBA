@@ -4,19 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-/* Ejercicio de ejemplo: implementación de una correlación cruzada */
-// Implementación en C
-void corr(int16_t *vectorX, int16_t *vectorY, int16_t *vectorCorr, uint32_t longitud){
-	int32_t acumulador;
-	for(uint32_t l = 0; l < longitud; l ++){
-		acumulador = 0;
-		for(uint32_t n = l; n < longitud; n ++){
-			acumulador += vectorX[n]*vectorY[n-l];
-		}/* Clase 6 */
-
-#include "functions.h"
-#include <stdio.h>
-#include <string.h>
+extern UART_HandleTypeDef huart2;
 
 /* Ejercicio de ejemplo: implementación de una correlación cruzada */
 // Implementación en C
@@ -32,7 +20,7 @@ void corr(int16_t *vectorX, int16_t *vectorY, int32_t *vectorCorr, uint16_t long
 }
 
 // Implementación en C con intrinsic functions DSP:
-void corr_intrinsic(int16_t *vectorX, int16_t *vectorY, int32_t *vectorCorr, uint16_t longitud){
+void corr_Intrinsic(int16_t *vectorX, int16_t *vectorY, int32_t *vectorCorr, uint16_t longitud){
 	uint16_t n, l;
 	int32_t acumulador, x_paquete, y_paquete;
 	for(l = 0; l < longitud; l ++){
