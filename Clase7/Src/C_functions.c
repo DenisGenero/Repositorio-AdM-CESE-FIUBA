@@ -1,8 +1,10 @@
-/* Clase 6 */
+/* Clase 7 */
 
 #include "functions.h"
 #include <stdio.h>
 #include <string.h>
+
+extern UART_HandleTypeDef huart2;
 
 /* Ejercicio de ejemplo: implementación de una correlación cruzada */
 // Implementación en C
@@ -16,7 +18,6 @@ void corr(int16_t *vectorX, int16_t *vectorY, int32_t *vectorCorr, uint16_t long
 		vectorCorr[l] = acumulador;
 	}
 }
-
 
 // Implementación en C con intrinsic functions DSP:
 void corr_intrinsic(int16_t *vectorX, int16_t *vectorY, int32_t *vectorCorr, uint16_t longitud){

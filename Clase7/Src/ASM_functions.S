@@ -116,7 +116,6 @@
 				add r4, #1                 // l ++
 				b _loop_exterior_dsp
 
-
 		_exit_corr_dsp:
 			pop {r4-r10}
 			bx lr
