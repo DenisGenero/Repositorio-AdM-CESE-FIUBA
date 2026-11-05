@@ -62,7 +62,6 @@
         // ANTES del push, el Stack se organiza de la siguiente manera:
         //      Dato       | Dirección
         // -----------------------------
-        // Stack frame     |
         // ...             |
         // 6° parámetro    | SP + 4
         // 5° parámetro    |   SP   <--
@@ -71,7 +70,6 @@
         // LUEGO del push, el Stack queda:
         //      Dato       | Dirección
         // -----------------------------
-        // Stack frame     |
         // ...             |
         // 6° parámetro    | SP + 24
         // 5° parámetro    | SP + 20
