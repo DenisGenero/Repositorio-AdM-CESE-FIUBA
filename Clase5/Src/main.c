@@ -68,17 +68,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-    extern int16_t senial_Ruido[VEC_SIZE];
-	int16_t signalFilt_C[VEC_SIZE];
-	int16_t signalFilt_ASM[VEC_SIZE];
-
-	DWT->CYCCNT = 0;
-	MediaMovil(senial_Ruido, signalFilt_C, VEC_SIZE);
-	ciclos_C = DWT->CYCCNT;
-
-	DWT->CYCCNT = 0;
-	asm_MediaMovil(senial_Ruido, signalFilt_ASM, VEC_SIZE);
-	ciclos_ASM = DWT->CYCCNT;
 
   /* USER CODE END 1 */
 
@@ -102,6 +91,18 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  
+  extern int16_t senial_Ruido[VEC_SIZE];
+  int16_t signalFilt_C[VEC_SIZE];
+  int16_t signalFilt_ASM[VEC_SIZE];
+
+  DWT->CYCCNT = 0;
+  MediaMovil(senial_Ruido, signalFilt_C, VEC_SIZE);
+  ciclos_C = DWT->CYCCNT;
+
+  DWT->CYCCNT = 0;
+  asm_MediaMovil(senial_Ruido, signalFilt_ASM, VEC_SIZE);
+  ciclos_ASM = DWT->CYCCNT;
   
   // Llamar a la función luego de inicializar la USART2
   ExportarVector(signalFilt_C, VEC_SIZE, EXPORT_TYPE_C, EXPORT_MODE_CONTINUE);

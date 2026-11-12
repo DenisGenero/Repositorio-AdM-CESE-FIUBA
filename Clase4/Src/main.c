@@ -68,22 +68,6 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 
-    /* ----------- Ejercicio 1 ----------- */
-    uint16_t esc = 6;
-    uint32_t vec[] = {1, 2, 3, 4, 5};
-    uint32_t lon = sizeof(vec)/sizeof(vec[0]);
-    uint32_t vecOut1[lon], vecOut2[lon];
-    productoEscalar32(vec, vecOut1, lon, esc);
-    asm_productoEscalar32(vec, vecOut2, lon, esc);
-
-    /* ----------- Ejercicio 1 ----------- */
-
-    /* ----------- Ejercicio 3 ----------- */
-    uint32_t a = 1023;
-    uint32_t b = bitfield_clear(a, 5, 3);
-    uint32_t c = asm_bitfield_clear(a, 5, 3);
-    /* ----------- Ejercicio 3 ----------- */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -106,6 +90,22 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  
+  /* ----------- Ejercicio 1 ----------- */
+  uint16_t esc = 6;
+  uint32_t vec[] = {1, 2, 3, 4, 5};
+  uint32_t lon = sizeof(vec)/sizeof(vec[0]);
+  uint32_t vecOut1[lon], vecOut2[lon];
+  productoEscalar32(vec, vecOut1, lon, esc);
+  asm_productoEscalar32(vec, vecOut2, lon, esc);
+
+  /* ----------- Ejercicio 1 ----------- */
+
+  /* ----------- Ejercicio 3 ----------- */
+  uint32_t a = 1023;
+  uint32_t b = bitfield_clear(a, 5, 3);
+  uint32_t c = asm_bitfield_clear(a, 5, 3);
+  /* ----------- Ejercicio 3 ----------- */
 
   /* USER CODE END 2 */
 

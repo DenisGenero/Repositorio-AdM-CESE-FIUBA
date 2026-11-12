@@ -68,20 +68,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-    DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
-    uint32_t ciclos_C, ciclos_ASM;
-
-    float vec[] = {5.1, 5.3, 5.4, 5.0};
-    uint32_t lon = sizeof(vec)/sizeof(vec[0]);
-    float prom, std_dev, prom1, std_dev1;
-
-    DWT->CYCCNT = 0;
-    standardDeviation(vec, &prom, &std_dev, lon);
-    ciclos_C = DWT->CYCCNT;
-
-    DWT->CYCCNT = 0;
-    asm_standardDeviation(vec, &prom1, &std_dev1, lon);
-    ciclos_ASM = DWT->CYCCNT;
 
   /* USER CODE END 1 */
 
@@ -105,6 +91,21 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  
+  DWT->CTRL |= 1 << DWT_CTRL_CYCCNTENA_Pos;
+  uint32_t ciclos_C, ciclos_ASM;
+
+  float vec[] = {5.1, 5.3, 5.4, 5.0};
+  uint32_t lon = sizeof(vec)/sizeof(vec[0]);
+  float prom, std_dev, prom1, std_dev1;
+
+  DWT->CYCCNT = 0;
+  standardDeviation(vec, &prom, &std_dev, lon);
+  ciclos_C = DWT->CYCCNT;
+
+  DWT->CYCCNT = 0;
+  asm_standardDeviation(vec, &prom1, &std_dev1, lon);
+  ciclos_ASM = DWT->CYCCNT;
 
   /* USER CODE END 2 */
 

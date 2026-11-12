@@ -67,34 +67,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-    /* ----------- Función asm_sum ----------- */
-    uint32_t a, b, c;
-    a = 50;
-    b = 20;
-    c = asm_sum(a, b);
-    /* ----------- Función asm_sum ----------- */
-
-    /* ----------- Función asm_svc ----------- */
-    // Ejecución paso a paso:
-    // Vemos el contenido del registro control:
-    uint32_t x = __get_CONTROL();
-    // Seteamos el valor en cero (vamos al modo no privilegiado)
-    x |= 1;
-    __set_CONTROL(x); // Ver en la pestaña Register el valor de control
-    // Intentamos volver al modo privilegiado:
-    x &= ~1;
-    __set_CONTROL(x); // Ver en la pestaña Register el valor de control
-    // Como la escritura del registro es ignorada, se debe disparar una excepción:
-    asm_svc();
-    /* ----------- Función asm_svc ----------- */
-
-    /* ----------- Función asm_stack ----------- */
-    uint32_t d, e, f;
-    d = 10;
-    e = 1234;
-    f = 5678;
-    asm_stack(a, b, c, d, e, f);
-    /* ----------- Función asm_stack ----------- */
 
   /* USER CODE END 1 */
 
@@ -118,6 +90,35 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  
+  /* ----------- Función asm_sum ----------- */
+  uint32_t a, b, c;
+  a = 50;
+  b = 20;
+  c = asm_sum(a, b);
+  /* ----------- Función asm_sum ----------- */
+
+  /* ----------- Función asm_svc ----------- */
+  // Ejecución paso a paso:
+  // Vemos el contenido del registro control:
+  uint32_t x = __get_CONTROL();
+  // Seteamos el valor en cero (vamos al modo no privilegiado)
+  x |= 1;
+  __set_CONTROL(x); // Ver en la pestaña Register el valor de control
+  // Intentamos volver al modo privilegiado:
+  x &= ~1;
+  __set_CONTROL(x); // Ver en la pestaña Register el valor de control
+  // Como la escritura del registro es ignorada, se debe disparar una excepción:
+  asm_svc();
+  /* ----------- Función asm_svc ----------- */
+
+  /* ----------- Función asm_stack ----------- */
+  uint32_t d, e, f;
+  d = 10;
+  e = 1234;
+  f = 5678;
+  asm_stack(a, b, c, d, e, f);
+  /* ----------- Función asm_stack ----------- */
 
   /* USER CODE END 2 */
 
