@@ -1,5 +1,5 @@
-#ifndef DATOS_PRUEBA_GE2_H
-#define DATOS_PRUEBA_GE2_H
+#ifndef FUNCTIONS_GE2_H
+#define FUNCTIONS_GE2_H
 
 
 // ============================================================================
@@ -77,4 +77,4 @@ void asm_downSample(int32_t *Signal_HF, int32_t *Signal_LF, uint16_t longitud, u
 uint32_t asm_max(int32_t *vectorIn, uint32_t longitud);
 void asm_invertir(uint16_t *buffer, uint16_t longitud);
 
-#endif // DATOS_PRUEBA_GE2_H
+#endif // FUNCTIONS_GE2_H
