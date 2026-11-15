@@ -1,0 +1,21 @@
+# El .gitignore de la raíz excluye los archivos de proyecto de CubeIDE
+# (el repo del profe solo guarda Src/Inc). Acá se vuelven a incluir para
+# que GdE1 se pueda importar y compilar directamente.
+!.cproject
+!.project
+!.mxproject
+!*.ioc
+!*.ld
+!.settings/
+!Drivers/
+!Core/Startup/
+!Core/Inc/main.h
+!Core/Inc/stm32f4xx_it.h
+!Core/Inc/stm32f4xx_hal_conf.h
+!Core/Src/syscalls.c
+!Core/Src/sysmem.c
+
+# Salida de compilación y configuraciones locales de debug
+Debug/
+Release/
+*.launch
