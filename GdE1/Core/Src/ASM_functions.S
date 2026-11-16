@@ -125,7 +125,7 @@
 .thumb_func
 	asm_bitfield_toggle:
 		// Guarda de seguridad
-		// OJO: acá NO se puede salir si dato = 0 (como en clear), porque
+		// Aclaración: acá NO se puede salir si dato = 0 (como en clear), porque
 		// invertir bits de un 0 da un resultado distinto de 0
 		cbz r1, _exit4  // Salir si el ancho del campo es cero (se devuelve el dato)
 
