@@ -30,6 +30,7 @@
 		// Guarda de seguridad
 		cbz r0, _exit1           // Salir si vectorIn es una dirección nula
 		cbz r1, _exit1           // Salir si vectorOut es una dirección nula
+		cbz r2, _exit1           // Salir si longitud = 0 (si no, sub r2 daría 0xFFFFFFFF)
 
 	_loop1:
 		sub r2, #1               // longitud = longitud - 1
