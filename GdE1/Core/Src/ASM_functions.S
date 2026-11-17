@@ -73,6 +73,9 @@
 		// LSL #1: es para desplazarnos de a 2 bytes (datos de 16 bits)
 		ldrh r4, [r0, r2, LSL #1] // Se carga un halfword desde el último hacia el primero
 		mul r4, r4, r3           // r4 = vectorIn*escalar (16x16 bits, entra en 32 bits)
+		// Alternativa: usat r4, #12, r4 (satura a [0, 4095] en una instrucción).
+		// No se usa porque usat interpreta r4 con signo: un producto >= 2^31
+		// se saturaría a 0 en vez de a 4095. Consultado con el profesor por email.
 		cmp r4, r5               // Se compara el producto con 4095
 		bls _noSatura2           // Si r4 <= 4095 (comparación SIN signo), no satura
 		mov r4, r5               // De lo contrario, se satura: r4 = 4095
