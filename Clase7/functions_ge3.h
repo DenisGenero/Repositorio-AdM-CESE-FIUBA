@@ -1,5 +1,5 @@
-#ifndef DATOS_PRUEBA_GE3_H
-#define DATOS_PRUEBA_GE3_H
+#ifndef FUNCTIONS_GE3_H
+#define FUNCTIONS_GE3_H
 
 #include <stdint.h>
 
@@ -75,4 +75,4 @@ void asm_medDif_DSP(int8_t *e, int8_t *x, int8_t *y, uint16_t longitud);
 void asm_eco(int16_t *signal, int16_t *sig_eco, uint32_t lon);
 void asm_eco_DSP(int16_t *signal, int16_t *sig_eco, uint32_t lon);
 
-#endif // DATOS_PRUEBA_GE3_H
+#endif // FUNCTIONS_GE3_H
