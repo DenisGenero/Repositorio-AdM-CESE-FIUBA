@@ -46,8 +46,13 @@ def leer_uart():
                 break
             
             # 4. Desempaquetar dinámicamente usando cantidad_muestras
-            char_formato = 'i' if tam_bytes == 4 else 'h'
+            char_formato = 'i' if tam_bytes == 4 else 'h'  # i = int32_t; h = int16_t
+            # Configuración para desempaquetar los datos recibidos:
+            #   - <: little-endian
+            #   - {cantidad_demuestras}: cuantos datos hay
+            #   - {char_formato}: 4 (int32_t) o 2 (int16_t)
             formato_unpack = f"<{cantidad_muestras}{char_formato}"
+            # Desempaquetar los datos y guardarlos en una lista
             datos_recibidos = list(struct.unpack(formato_unpack, buffer_datos))
 
             # 5. Leer línea final de control ("end" o vacío)

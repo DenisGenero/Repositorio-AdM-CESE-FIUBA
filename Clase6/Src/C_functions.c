@@ -40,26 +40,23 @@ void corr_Intrinsic(int16_t *vectorX, int16_t *vectorY, int32_t *vectorCorr, uin
 	}
 }
 
-static char* int2str(uint16_t num) {
-	// 5 dígitos + '\0' (65.536 + '\0')
-    static char buf[6];
-    char *ptr = &buf[5];
-    // Terminador de string
-    *ptr = '\0';
+static char* int2str(uint32_t num) {
+	// Máximo uint32_t: 4294967295 (10 dígitos) + '\0' = 11 bytes
+	static char buf[11];
+	char *ptr = &buf[10];
+	*ptr = '\0';
 
-    if (num == 0) {
-        *(--ptr) = '0';
-        return ptr;
-    }
+	if (num == 0) {
+		*(--ptr) = '0';
+		return ptr;
+	}
 
-    // Desarmamos el número desde las unidades hacia atrás
-    while (num > 0) {
-        *(--ptr) = (num % 10) + '0';
-        num /= 10;
-    }
+	while (num > 0) {
+		*(--ptr) = (char)((num % 10U) + '0');
+		num /= 10U;
+	}
 
-    // Retorna el puntero al inicio de la cadena resultante
-    return ptr;
+	return ptr;
 }
 
 
@@ -84,12 +81,12 @@ void ExportarVector(int32_t* vector, uint16_t len, ExportType lenguaje, ExportMo
     HAL_UART_Transmit(&huart2, (uint8_t*)&newline, 1, HAL_MAX_DELAY);
 
     // Enviar metadatos: tamaño de los datos
-    uint8_t tamanio_dato = sizeof(vector[0]);
-    char* strptr = int2str((uint16_t)tamanio_dato);
+    uint32_t tamanio_dato = (uint32_t)sizeof(vector[0]);
+    char* strptr = int2str(tamanio_dato);
     HAL_UART_Transmit(&huart2, (uint8_t*)strptr, strlen(strptr) , HAL_MAX_DELAY);
     HAL_UART_Transmit(&huart2, (uint8_t*)",", 1, HAL_MAX_DELAY);
     // Enviar metadatos: cantidad de datos
-    uint32_t total_bytes = len * tamanio_dato;
+    uint32_t total_bytes = (uint32_t)len * tamanio_dato;
     strptr = int2str(total_bytes);
     HAL_UART_Transmit(&huart2, (uint8_t*)strptr, strlen(strptr) , HAL_MAX_DELAY);
     HAL_UART_Transmit(&huart2, (uint8_t*)&newline, 1, HAL_MAX_DELAY);

@@ -6,7 +6,7 @@ def inicializar_modulos(muestras):
     Genera los archivos para guardar las señales provenientes del micro.
     """
 
-    modulos = ["Correlation_C", "Correlation_C_Intr", "Correlation_ASM", "Correlation_DSP"]
+    modulos = ["Correlation_C", "Correlation_C_INTR", "Correlation_ASM", "Correlation_DSP"]
     
     for modulo in modulos:
         file_path = Path(f"{modulo}.py")
@@ -50,10 +50,12 @@ def generar_archivos_header(path_destino, senialX, senialY):
         f.write("#define CORRELATION_H\n\n")
         f.write("#include <stdint.h>\n")
         f.write('#include "config.h"\n\n')
-        f.write("int16_t vecX[VEC_SIZE] __attribute__((aligned(4))) = {\n")
+        f.write("int16_t vecX[VEC_SIZE] = {\n")
+        # f.write("int16_t vecX[VEC_SIZE] __attribute__((aligned(4))) = {\n")
         f.write(", ".join(map(str, senialX)))
         f.write("\n};\n")
-        f.write("int16_t vecY[VEC_SIZE] __attribute__((aligned(4))) = {\n")
+        f.write("int16_t vecY[VEC_SIZE] = {\n")
+        # f.write("int16_t vecY[VEC_SIZE] __attribute__((aligned(4))) = {\n")
         f.write(", ".join(map(str, senialY)))
         f.write("\n};\n\n#endif\n")
         
